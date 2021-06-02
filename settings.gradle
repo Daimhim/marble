@@ -1,0 +1,3 @@
+rootProject.name = "marble"
+include ':app'
+include ':marble'
