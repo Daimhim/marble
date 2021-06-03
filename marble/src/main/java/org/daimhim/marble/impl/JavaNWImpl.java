@@ -32,7 +32,7 @@ public class JavaNWImpl implements INetWork {
     @Override
     public Pebbles execute() {
         Pebbles pebbles = new Pebbles();
-        StringBuffer stringBuffer = new StringBuffer(checkUrl(request.getUrl()));
+        StringBuilder stringBuffer = new StringBuilder(checkUrl(request.getUrl()));
         if (!request.getUrlParameter().isEmpty()){
             stringBuffer
                     .append("?");
@@ -47,7 +47,7 @@ public class JavaNWImpl implements INetWork {
         if (!request.getUrlParameter().isEmpty() && stringBuffer.length() != 0){
             stringBuffer.deleteCharAt(stringBuffer.length()-1);
         }
-        URL url = null;
+        URL url;
         try {
             url = new URL(stringBuffer.toString());
             URLConnection openConnection = url.openConnection();
@@ -60,7 +60,7 @@ public class JavaNWImpl implements INetWork {
                 }
                 HttpURLConnection httpURLConnection = ((HttpURLConnection) openConnection);
                 httpURLConnection.setRequestMethod(request.getMethod());
-                // 设置此 HttpURLConnection 实例是否应该自动执行 HTTP 重定向
+                //
                 httpURLConnection.setInstanceFollowRedirects(true);
                 // 设置超时时间
                 httpURLConnection.setConnectTimeout(3000);

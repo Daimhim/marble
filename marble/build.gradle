@@ -13,26 +13,4 @@ group 'org.daimhim.marble'
 version '1.0.0-SNAPSHOT'
 def artifactId = 'marble'
 //上传脚本   版本号 -SNAPSHOT 代表开发库
-//initUpload(group,version,'marble')
-project.apply plugin: 'maven'
-uploadArchives {
-    repositories {
-        mavenDeployer {
-//                    repository(url: 'https://packages.aliyun.com/maven/repository/2003252-release-xALAGs/') {
-//                        authentication(
-//                                userName: '5fe03dee8d483c39b2b80729',
-//                                password: 'wD=4oZ67JbAP'
-//                        )
-//                    }
-            snapshotRepository(url: 'https://packages.aliyun.com/maven/repository/2003252-snapshot-a8Mktt/') {
-                authentication(
-                        userName: '5fe03dee8d483c39b2b80729',
-                        password: 'wD=4oZ67JbAP'
-                )
-            }
-            pom.version = version
-            pom.artifactId = artifactId
-            pom.groupId = group
-        }
-    }
-}
+initUpload(group.toString(),version.toString(),artifactId)
