@@ -1,15 +1,52 @@
 package org.daimhim.marble;
 
+import org.daimhim.marble.inner.INetWork;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class SandySoil {
-    private String method = "GET";
-    private String url = "";
-    private String tag = "default";
-    private Map<String,String> headers = new HashMap<>();
-    private Map<String,String> urlParameter = new HashMap<>();
-    private Map<String,Object> form = new HashMap<>();
-    private String contentType = Compressor.FORM;
-    private var iNetWork: INetWork;
+    protected String method;
+    protected String url;
+    protected String tag;
+    protected String contentType;
+    protected INetWork netWork;
+    protected Map<String,String> headers;
+    protected Map<String,String> urlParameter;
+    protected Map<String,Object> form;
+
+    protected SandySoil() {
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public INetWork getNetWork() {
+        return netWork;
+    }
+
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
+
+    public Map<String, String> getUrlParameter() {
+        return urlParameter;
+    }
+
+    public Map<String, Object> getForm() {
+        return form;
+    }
 }
