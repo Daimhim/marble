@@ -33,18 +33,11 @@ public class JSONUtil {
         return build.create();
     }
 
-    /**
-     * 示例
-     * JSONUtils.fromMapJson(json, String::class.java, String::class.java)
-     */
     public static <K, V> Map<K, V> fromMapJson(String json, Class<K> key, Class<V> value) {
         return GSON.fromJson(json, new FromJsonImpl(Map.class, new Type[]{key, value}));
     }
 
-    /**
-     * 示例
-     * JSONUtils.fromListJson(json,String::class.java)
-     */
+
     public static <V> List<V> fromListJson(String json, Class<V> value) {
         return GSON.fromJson(json, new FromJsonImpl(List.class, new Type[]{value}));
     }
