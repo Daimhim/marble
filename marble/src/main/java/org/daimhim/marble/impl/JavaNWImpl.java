@@ -63,7 +63,12 @@ public class JavaNWImpl implements INetWork {
                 //
                 httpURLConnection.setInstanceFollowRedirects(true);
                 // 设置超时时间
-                httpURLConnection.setConnectTimeout(3000);
+                if (request.getConnectTimeout() != -1) {
+                    httpURLConnection.setConnectTimeout(request.getConnectTimeout());
+                }
+                if (request.getReadTimeout() != -1) {
+                    httpURLConnection.setReadTimeout(request.getReadTimeout());
+                }
                 // 设置是否输出
                 httpURLConnection.setDoOutput(true);
                 // 设置是否读入

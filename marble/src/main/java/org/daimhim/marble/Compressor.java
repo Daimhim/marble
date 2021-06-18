@@ -22,11 +22,23 @@ public class Compressor {
         private String method = "GET";
         private String url = "";
         private String tag = "default";
+        private int readTimeout = -1;
+        private int connectTimeout = -1;
         private Map<String,String> headers = new HashMap<>();
         private Map<String,String> urlParameter = new HashMap<>();
         private Map<String,Object> form = new HashMap<>();
         private String contentType = Compressor.FORM;
         private INetWork netWork;
+
+        public Build setReadTimeout(int readTimeout) {
+            this.readTimeout = readTimeout;
+            return this;
+        }
+
+        public Build setConnectTimeout(int connectTimeout) {
+            this.connectTimeout = connectTimeout;
+            return this;
+        }
 
         public Build addHeaders(String key, String value)  {
             this.headers.put(key,value);

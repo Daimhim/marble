@@ -10,6 +10,8 @@ public class SandySoil {
     protected String url;
     protected String tag;
     protected String contentType;
+    protected int readTimeout;
+    protected int connectTimeout;
     protected INetWork netWork;
     protected Map<String,String> headers;
     protected Map<String,String> urlParameter;
@@ -48,5 +50,13 @@ public class SandySoil {
 
     public Map<String, Object> getForm() {
         return form;
+    }
+
+    public int getReadTimeout() {
+        return readTimeout;
+    }
+
+    public int getConnectTimeout() {
+        return connectTimeout;
     }
 }
