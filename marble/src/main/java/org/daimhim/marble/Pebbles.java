@@ -36,8 +36,8 @@ public class Pebbles {
             inputStream.close();
             disconnect();
         } catch (IOException e) {
-            stoneCore.setE(e);
             e.printStackTrace();
+            stoneCore.setE(e);
         }
     }
 
