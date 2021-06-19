@@ -42,6 +42,6 @@ public class OkhttpSCImpl extends IStoneCore {
 
     @Override
     public void disconnect() {
-
+        response.close();
     }
 }
