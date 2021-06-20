@@ -16,7 +16,7 @@ import java.net.HttpURLConnection;
  */
 public class JavaSCImpl extends IStoneCore {
     private final HttpURLConnection httpURLConnection;
-    private int DEFAULT_BUFFER_SIZE = 8 * 1024;
+    private int DEFAULT_BUFFER_SIZE = 4 * 1024;
 
     public JavaSCImpl(HttpURLConnection httpURLConnection) {
         this.httpURLConnection = httpURLConnection;
@@ -26,7 +26,7 @@ public class JavaSCImpl extends IStoneCore {
     public String string() {
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            reader = new BufferedReader(new InputStreamReader(byteStream()));
             StringWriter out = new StringWriter();
             char[] buffer = new char[DEFAULT_BUFFER_SIZE];
             int chars = reader.read(buffer);
@@ -35,11 +35,11 @@ public class JavaSCImpl extends IStoneCore {
                 chars = reader.read(buffer);
             }
             return out.toString();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             setE(e);
-        }finally {
-            if (reader != null){
+        } finally {
+            if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
@@ -50,18 +50,25 @@ public class JavaSCImpl extends IStoneCore {
         }
         return null;
     }
+
     @Override
     public InputStream byteStream() {
         try {
-            return httpURLConnection.getInputStream();
+            int responseCode = httpURLConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                return httpURLConnection.getInputStream();
+            } else {
+                return httpURLConnection.getErrorStream();
+            }
         } catch (IOException e) {
             e.printStackTrace();
             setE(e);
         }
         return null;
     }
+
     @Override
-    public void disconnect(){
+    public void disconnect() {
         httpURLConnection.disconnect();
     }
 }
