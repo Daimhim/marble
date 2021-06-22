@@ -31,7 +31,8 @@ public class JavaNWImpl implements INetWork {
 
     @Override
     public Pebbles execute() {
-        Pebbles pebbles = new Pebbles();
+        Pebbles pebbles = null;
+        JavaSCImpl stoneCore = null;
         StringBuilder stringBuffer = new StringBuilder(checkUrl(request.getUrl()));
         if (!request.getUrlParameter().isEmpty()){
             stringBuffer
@@ -96,7 +97,7 @@ public class JavaNWImpl implements INetWork {
                     httpURLConnection.getOutputStream().flush();
                     httpURLConnection.getOutputStream().close();
                 }
-                JavaSCImpl stoneCore = new JavaSCImpl(httpURLConnection);
+                stoneCore = new JavaSCImpl(httpURLConnection);
                 int responseCode = httpURLConnection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     pebbles = new Pebbles(stoneCore);
@@ -107,6 +108,9 @@ public class JavaNWImpl implements INetWork {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            stoneCore = new JavaSCImpl(null);
+            stoneCore.setE(e);
+            pebbles = new Pebbles(stoneCore);
         }
         return pebbles;
     }

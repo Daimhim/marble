@@ -59,7 +59,9 @@ public class OkhttpNWImpl implements INetWork {
                 .enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        pebblesCall.call(new Pebbles());
+                        OkhttpSCImpl okhttpSC = new OkhttpSCImpl(null);
+                        okhttpSC.setE(e);
+                        pebblesCall.call(new Pebbles(okhttpSC));
                     }
 
                     @Override

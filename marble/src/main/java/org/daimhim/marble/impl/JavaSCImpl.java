@@ -16,7 +16,6 @@ import java.net.HttpURLConnection;
  */
 public class JavaSCImpl extends IStoneCore {
     private final HttpURLConnection httpURLConnection;
-    private int DEFAULT_BUFFER_SIZE = 4 * 1024;
 
     public JavaSCImpl(HttpURLConnection httpURLConnection) {
         this.httpURLConnection = httpURLConnection;
@@ -24,10 +23,14 @@ public class JavaSCImpl extends IStoneCore {
 
     @Override
     public String string() {
+        if (httpURLConnection == null){
+            return null;
+        }
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(byteStream()));
             StringWriter out = new StringWriter();
+            int DEFAULT_BUFFER_SIZE = 4 * 1024;
             char[] buffer = new char[DEFAULT_BUFFER_SIZE];
             int chars = reader.read(buffer);
             while (chars >= 0) {
@@ -53,13 +56,11 @@ public class JavaSCImpl extends IStoneCore {
 
     @Override
     public InputStream byteStream() {
+        if (httpURLConnection == null){
+            return null;
+        }
         try {
-            int responseCode = httpURLConnection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                return httpURLConnection.getInputStream();
-            } else {
-                return httpURLConnection.getErrorStream();
-            }
+            return httpURLConnection.getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
             setE(e);
@@ -69,6 +70,9 @@ public class JavaSCImpl extends IStoneCore {
 
     @Override
     public void disconnect() {
+        if (httpURLConnection == null){
+            return;
+        }
         httpURLConnection.disconnect();
     }
 }

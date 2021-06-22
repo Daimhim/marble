@@ -21,6 +21,9 @@ public class OkhttpSCImpl extends IStoneCore {
 
     @Override
     public String string() {
+        if (response == null){
+            return null;
+        }
         try {
              if (response.body() != null){
                  return response.body().string();
@@ -34,6 +37,9 @@ public class OkhttpSCImpl extends IStoneCore {
 
     @Override
     public InputStream byteStream() {
+        if (response == null){
+            return null;
+        }
         if (response.body() != null){
             return response.body().byteStream();
         }
@@ -42,6 +48,9 @@ public class OkhttpSCImpl extends IStoneCore {
 
     @Override
     public void disconnect() {
+        if (response == null){
+            return;
+        }
         response.close();
     }
 }

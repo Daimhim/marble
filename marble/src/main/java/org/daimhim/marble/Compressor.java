@@ -119,10 +119,11 @@ public class Compressor {
             sandySoil.url = this.url;
             sandySoil.tag = this.tag;
             sandySoil.contentType = this.contentType;
-            sandySoil.netWork = this.netWork;
             sandySoil.headers = this.headers;
             sandySoil.urlParameter = this.urlParameter;
             sandySoil.form = this.form;
+            sandySoil.readTimeout = this.readTimeout;
+            sandySoil.connectTimeout = this.connectTimeout;
             return sandySoil;
         }
     }

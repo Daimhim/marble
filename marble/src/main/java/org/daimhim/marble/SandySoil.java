@@ -1,8 +1,5 @@
 package org.daimhim.marble;
 
-import org.daimhim.marble.inner.INetWork;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public class SandySoil {
@@ -12,7 +9,6 @@ public class SandySoil {
     protected String contentType;
     protected int readTimeout;
     protected int connectTimeout;
-    protected INetWork netWork;
     protected Map<String,String> headers;
     protected Map<String,String> urlParameter;
     protected Map<String,Object> form;
@@ -34,10 +30,6 @@ public class SandySoil {
 
     public String getContentType() {
         return contentType;
-    }
-
-    public INetWork getNetWork() {
-        return netWork;
     }
 
     public Map<String, String> getHeaders() {
