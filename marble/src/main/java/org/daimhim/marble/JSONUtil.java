@@ -66,9 +66,11 @@ public class JSONUtil {
             }
             if (json.isJsonObject()) {
                 return JSONUtil.toJson(json);
-            } else if (json.isJsonArray() || json.isJsonPrimitive()) {
+            } else if (json.isJsonArray()) {
+                return JSONUtil.toJson(json);
+            } else if (json.isJsonPrimitive()){
                 return json.getAsString();
-            } else {
+            }else {
                 return json.toString();
             }
         }
