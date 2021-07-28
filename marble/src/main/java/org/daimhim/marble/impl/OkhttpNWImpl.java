@@ -66,7 +66,9 @@ public class OkhttpNWImpl implements INetWork {
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        pebblesCall.call(new Pebbles(new OkhttpSCImpl(response)));
+                        OkhttpSCImpl stoneCore = new OkhttpSCImpl(response);
+                        stoneCore.setCode(response.code());
+                        pebblesCall.call(new Pebbles(stoneCore));
                     }
                 });
     }

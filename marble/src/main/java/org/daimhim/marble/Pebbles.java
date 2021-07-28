@@ -66,4 +66,8 @@ public class Pebbles {
     public void disconnect() {
         stoneCore.disconnect();
     }
+
+    public int code(){
+        return stoneCore.getCode();
+    }
 }

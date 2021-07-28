@@ -99,6 +99,7 @@ public class JavaNWImpl implements INetWork {
                 }
                 stoneCore = new JavaSCImpl(httpURLConnection);
                 int responseCode = httpURLConnection.getResponseCode();
+                stoneCore.setCode(responseCode);
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     pebbles = new Pebbles(stoneCore);
                     return pebbles;

@@ -15,4 +15,14 @@ public abstract class IStoneCore {
     public void setE(Exception e) {
         this.e = e;
     }
+
+    private int code;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
 }
