@@ -1,5 +1,6 @@
 package org.daimhim.marble;
 
+import org.daimhim.marble.impl.LogImpl;
 import org.daimhim.marble.inner.INetWork;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ public class Compressor {
 
     public static class Build{
         public Build(INetWork iNetWork) {
-            this.netWork = iNetWork;
+            this.netWork = new LogImpl(iNetWork);
         }
 
         private String method = "GET";
