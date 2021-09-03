@@ -8,6 +8,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.Headers;
 
 /**
  * author : Zhangx
@@ -16,7 +20,6 @@ import java.net.HttpURLConnection;
  */
 public class JavaSCImpl extends IStoneCore {
     private final HttpURLConnection httpURLConnection;
-
     public JavaSCImpl(HttpURLConnection httpURLConnection) {
         this.httpURLConnection = httpURLConnection;
     }
@@ -40,7 +43,7 @@ public class JavaSCImpl extends IStoneCore {
             return out.toString();
         } catch (Exception e) {
             e.printStackTrace();
-            setE(e);
+            this.e = e;
         } finally {
             if (reader != null) {
                 try {
@@ -63,7 +66,7 @@ public class JavaSCImpl extends IStoneCore {
             return httpURLConnection.getInputStream();
         } catch (IOException e) {
             e.printStackTrace();
-            setE(e);
+            this.e = e;
         }
         return null;
     }
@@ -74,5 +77,26 @@ public class JavaSCImpl extends IStoneCore {
             return;
         }
         httpURLConnection.disconnect();
+    }
+
+    @Override
+    public List<String> headers(String name) {
+        return httpURLConnection.getHeaderFields().get(name);
+    }
+
+    @Override
+    public String header(String name) {
+        return header(name, null);
+    }
+
+    @Override
+    public String header(String name, String defaultValue) {
+        String result = httpURLConnection.getHeaderField(name);
+        return result != null ? result : defaultValue;
+    }
+
+    @Override
+    public Map<String, List<String>> headers() {
+        return httpURLConnection.getHeaderFields();
     }
 }

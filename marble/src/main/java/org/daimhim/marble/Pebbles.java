@@ -3,6 +3,8 @@ package org.daimhim.marble;
 import org.daimhim.marble.inner.IStoneCore;
 
 import java.io.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * author : Zhangx
@@ -19,6 +21,11 @@ public class Pebbles {
         this.stoneCore = stoneCore;
     }
 
+    /**
+     * 把数据流下载到指定文件
+     * @param file  指定路径
+     * @param byteSize 缓存大小
+     */
     public void write(File file,int byteSize) {
         InputStream inputStream = byteStream();
         if (byteSize == -1){
@@ -37,7 +44,7 @@ public class Pebbles {
             disconnect();
         } catch (IOException e) {
             e.printStackTrace();
-            stoneCore.setE(e);
+            stoneCore.e = e;
         }
     }
 
@@ -50,14 +57,14 @@ public class Pebbles {
     }
 
     public Exception error() {
-        return stoneCore.error();
+        return stoneCore.e;
     }
 
     public boolean isSuccessful() {
         if (stoneCore == null) {
             return false;
         }
-        if (stoneCore.error() == null) {
+        if (stoneCore.e == null) {
             return true;
         }
         return false;
@@ -68,6 +75,31 @@ public class Pebbles {
     }
 
     public int code(){
-        return stoneCore.getCode();
+        return stoneCore.code;
+    }
+
+    /**
+     * 请求体
+     * @return 请求体
+     */
+    public SandySoil sandySoil(){
+        return stoneCore.sandySoil;
+    }
+
+
+    public List<String> headers(String name){
+        return stoneCore.headers(name);
+    }
+
+    public String header(String name){
+        return stoneCore.header(name);
+    }
+
+    public String header(String name, String defaultValue){
+        return stoneCore.header(name,defaultValue);
+    }
+
+    public Map<String, List<String>> headers(){
+        return stoneCore.headers();
     }
 }

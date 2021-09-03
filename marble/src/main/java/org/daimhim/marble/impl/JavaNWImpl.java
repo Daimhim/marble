@@ -24,10 +24,6 @@ import java.util.concurrent.Executors;
 public class JavaNWImpl implements INetWork {
     private final static ExecutorService fixedThreadPool  = Executors.newCachedThreadPool();
     private SandySoil request;
-    @Override
-    public SandySoil request() {
-        return request;
-    }
 
     @Override
     public Pebbles execute() {
@@ -98,19 +94,20 @@ public class JavaNWImpl implements INetWork {
                     httpURLConnection.getOutputStream().close();
                 }
                 stoneCore = new JavaSCImpl(httpURLConnection);
+                stoneCore.sandySoil = request;
                 int responseCode = httpURLConnection.getResponseCode();
-                stoneCore.setCode(responseCode);
+                stoneCore.code = responseCode;
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     pebbles = new Pebbles(stoneCore);
                     return pebbles;
                 }
-                stoneCore.setE(new JavaNetException(String.format("%s %s %s",responseCode,httpURLConnection.getResponseMessage(),url.getPath())));
+                stoneCore.e = new JavaNetException(String.format("%s %s %s",responseCode,httpURLConnection.getResponseMessage(),url.getPath()));
                 pebbles = new Pebbles(stoneCore);
             }
         } catch (IOException e) {
             e.printStackTrace();
             stoneCore = new JavaSCImpl(null);
-            stoneCore.setE(e);
+            stoneCore.e = e;
             pebbles = new Pebbles(stoneCore);
         }
         return pebbles;
@@ -134,9 +131,10 @@ public class JavaNWImpl implements INetWork {
     }
 
     @Override
-    public boolean cancel() {
+    public boolean cancel(String tag) {
         return false;
     }
+
 
     protected  String checkUrl(String url) {
         if (url.contains(":")) {

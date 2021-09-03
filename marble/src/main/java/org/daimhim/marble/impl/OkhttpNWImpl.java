@@ -34,11 +34,6 @@ public class OkhttpNWImpl implements INetWork {
     }
 
     @Override
-    public SandySoil request() {
-        return rb;
-    }
-
-    @Override
     public Pebbles execute() {
         Pebbles pebbles = new Pebbles();
         try {
@@ -60,14 +55,14 @@ public class OkhttpNWImpl implements INetWork {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         OkhttpSCImpl okhttpSC = new OkhttpSCImpl(null);
-                        okhttpSC.setE(e);
+                        okhttpSC.e = e;
                         pebblesCall.call(new Pebbles(okhttpSC));
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         OkhttpSCImpl stoneCore = new OkhttpSCImpl(response);
-                        stoneCore.setCode(response.code());
+                        stoneCore.code = response.code();
                         pebblesCall.call(new Pebbles(stoneCore));
                     }
                 });
@@ -82,9 +77,10 @@ public class OkhttpNWImpl implements INetWork {
     }
 
     @Override
-    public boolean cancel() {
+    public boolean cancel(String tag) {
         return false;
     }
+
 
     private RequestBody build(SandySoil rp) {
         RequestBody body  = null;

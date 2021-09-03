@@ -9,11 +9,6 @@ import org.daimhim.marble.SandySoil;
  * description :
  */
 public interface INetWork {
-    /**
-     * 获取请求参数
-     * @return
-     */
-    SandySoil request();
 
     /**
      * 同步请求
@@ -38,6 +33,6 @@ public interface INetWork {
      * 取消
      * @return
      */
-    boolean cancel();
+    boolean cancel(String tag);
 
 }

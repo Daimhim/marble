@@ -6,6 +6,7 @@ import org.daimhim.marble.impl.JavaNWImpl;
 import org.daimhim.marble.inner.INetWork;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Marble {
@@ -37,6 +38,11 @@ public class Marble {
         private Map<String, String> defaultHeaders;
         private String defaultUrl = "";
         private Gson gson = JSONUtil.GSON;
+        private List<INetWork> interceptor;
+
+        public void addInterceptor(INetWork iNetWork){
+
+        }
 
         public INetWork getDefNetWork() {
             return DEF_NET_WORK;

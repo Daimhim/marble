@@ -2,15 +2,45 @@ package org.daimhim.marble;
 
 import java.util.Map;
 
+/**
+ * 请求体
+ */
 public class SandySoil {
+    /**
+     * 请求方式
+     */
     protected String method;
+    /**
+     * 请求url
+     */
     protected String url;
+    /**
+     * 请求标记
+     */
     protected String tag;
+    /**
+     * 内容类型
+     */
     protected String contentType;
+    /**
+     * 读取超时
+     */
     protected int readTimeout;
+    /**
+     * 连接超时
+     */
     protected int connectTimeout;
+    /**
+     * head
+     */
     protected Map<String,String> headers;
+    /**
+     * 请求参数
+     */
     protected Map<String,String> urlParameter;
+    /**
+     * 表单
+     */
     protected Map<String,Object> form;
 
     protected SandySoil() {

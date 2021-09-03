@@ -4,7 +4,10 @@ import org.daimhim.marble.inner.IStoneCore;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
+import okhttp3.Headers;
 import okhttp3.Response;
 
 /**
@@ -30,7 +33,7 @@ public class OkhttpSCImpl extends IStoneCore {
              }
         } catch (IOException e) {
             e.printStackTrace();
-            setE(e);
+            this.e = e;
         }
         return null;
     }
@@ -52,5 +55,26 @@ public class OkhttpSCImpl extends IStoneCore {
             return;
         }
         response.close();
+    }
+
+    @Override
+    public List<String> headers(String name) {
+        return response.headers(name);
+    }
+
+    @Override
+    public String header(String name) {
+        return header(name, null);
+    }
+
+    @Override
+    public String header(String name, String defaultValue) {
+        String result = response.header(name);
+        return result != null ? result : defaultValue;
+    }
+
+    @Override
+    public Map<String, List<String>> headers() {
+        return response.headers().toMultimap();
     }
 }
