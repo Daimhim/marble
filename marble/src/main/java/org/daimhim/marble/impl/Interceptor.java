@@ -11,12 +11,30 @@ import org.daimhim.marble.inner.PebblesCall;
  * description :
  */
 public class Interceptor {
-//    @Override
-//    public Pebbles execute() {
-//        return null;
-//    }
+    private INetWork preINetWork;
 
+    public void setPreINetWork(INetWork preINetWork) {
+        this.preINetWork = preINetWork;
+    }
 
+    /**
+     * 同步请求
+     * @return
+     */
+    public Pebbles execute(){
+        return preINetWork.execute();
+    }
 
-
+    /**
+     * 异步请求
+     * @param pebblesCall
+     */
+    public void execute(final PebblesCall pebblesCall){
+        preINetWork.execute(new PebblesCall() {
+            @Override
+            public void call(Pebbles pebbles) {
+                pebblesCall.call(pebbles);
+            }
+        });
+    }
 }

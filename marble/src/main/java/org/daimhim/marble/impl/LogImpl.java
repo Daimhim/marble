@@ -1,5 +1,7 @@
 package org.daimhim.marble.impl;
 
+import static okhttp3.internal.platform.Platform.INFO;
+
 import org.daimhim.marble.JSONUtil;
 import org.daimhim.marble.Marble;
 import org.daimhim.marble.Pebbles;
@@ -13,6 +15,7 @@ import java.util.logging.Logger;
 
 import okhttp3.Headers;
 import okhttp3.MediaType;
+import okhttp3.internal.platform.Platform;
 import okio.Buffer;
 import okio.BufferedSource;
 import okio.GzipSource;
@@ -45,7 +48,8 @@ public class LogImpl implements INetWork {
 
     @Override
     public INetWork newCall(SandySoil sandySoil) {
-        return iNetWork.newCall(sandySoil);
+        iNetWork.newCall(sandySoil);
+        return this;
     }
 
     @Override
@@ -55,6 +59,9 @@ public class LogImpl implements INetWork {
 
 
     public void onLog(Pebbles pebbles) {
+        if (!Marble.getConfig().isDebug()){
+            return;
+        }
         SandySoil sandySoil = pebbles.sandySoil();
         log(String.format("--> %s %s", sandySoil.getMethod(), sandySoil.getUrl()));
         log(String.format("Headers: %s", JSONUtil.toJson(sandySoil.getHeaders())));
@@ -75,7 +82,7 @@ public class LogImpl implements INetWork {
     }
 
     public void log(String log) {
-        Logger.getLogger(Marble.class.getName()).log(Level.ALL,log);
+        Platform.get().log(INFO, log, null);
     }
 
     private static boolean bodyHasUnknownEncoding(Pebbles pebbles) {

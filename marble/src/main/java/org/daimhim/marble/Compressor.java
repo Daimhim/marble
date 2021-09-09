@@ -25,11 +25,11 @@ public class Compressor {
         private String tag = "default";
         private int readTimeout = -1;
         private int connectTimeout = -1;
-        private Map<String,String> headers = new HashMap<>();
-        private Map<String,String> urlParameter = new HashMap<>();
-        private Map<String,Object> form = new HashMap<>();
+        private final Map<String,String> headers = new HashMap<>();
+        private final Map<String,String> urlParameter = new HashMap<>();
+        private final Map<String,Object> form = new HashMap<>();
         private String contentType = Compressor.FORM;
-        private INetWork netWork;
+        private final INetWork netWork;
 
         public Build setReadTimeout(int readTimeout) {
             this.readTimeout = readTimeout;

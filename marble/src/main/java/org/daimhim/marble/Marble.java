@@ -34,14 +34,33 @@ public class Marble {
     }
 
     public static class Config{
+        /**
+         * 具体的网络执行者
+         */
         private INetWork DEF_NET_WORK;
+        /**
+         * 是否开启测试模式 打log
+         */
+        private boolean debug = false;
+        /**
+         * 所有请求的 默认请求头
+         */
         private Map<String, String> defaultHeaders;
+        /**
+         * 所有请求的默认url前缀
+         */
         private String defaultUrl = "";
+        /**
+         * 全局的默认解析器
+         */
         private Gson gson = JSONUtil.GSON;
+        /**
+         * 自定义拦截器
+         */
         private List<INetWork> interceptor;
 
         public void addInterceptor(INetWork iNetWork){
-
+            interceptor.add(iNetWork);
         }
 
         public INetWork getDefNetWork() {
@@ -60,7 +79,18 @@ public class Marble {
             return gson;
         }
 
-        public Config(String defaultUrl,INetWork DEF_NET_WORK, Map<String, String> defaultHeaders,  Gson gson) {
+        public boolean isDebug() {
+            return debug;
+        }
+
+        public void setDebug(boolean debug) {
+            this.debug = debug;
+        }
+
+        public Config(String defaultUrl,
+                      INetWork DEF_NET_WORK,
+                      Map<String, String> defaultHeaders,
+                      Gson gson) {
             this.DEF_NET_WORK = DEF_NET_WORK;
             this.defaultHeaders = defaultHeaders;
             this.defaultUrl = defaultUrl;
