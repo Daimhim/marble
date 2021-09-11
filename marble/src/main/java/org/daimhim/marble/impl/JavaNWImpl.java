@@ -50,7 +50,7 @@ public class JavaNWImpl implements INetWork {
             url = new URL(stringBuffer.toString());
             URLConnection openConnection = url.openConnection();
             openConnection.setRequestProperty("Accept-Charset", "utf-8");
-//            openConnection.setRequestProperty("Content-Type", request.getContentType());
+            openConnection.setRequestProperty("Content-Type", request.getContentType());
             if (openConnection instanceof HttpURLConnection) {
                 for (Map.Entry<String, String> entry :
                         request.getHeaders().entrySet()) {
@@ -68,17 +68,21 @@ public class JavaNWImpl implements INetWork {
                 if (request.getReadTimeout() != -1) {
                     httpURLConnection.setReadTimeout(request.getReadTimeout());
                 }
-                // 设置是否输出
-//                httpURLConnection.setDoOutput(true);
                 // 设置是否读入
-//                httpURLConnection.setDoInput(true);
-                //连接
-                openConnection.connect();
+                httpURLConnection.setDoInput(true);
                 if (Compressor.JSON.equals(request.getContentType())) {
+                    // 设置是否输出
+                    httpURLConnection.setDoOutput(true);
+                    //连接
+                    openConnection.connect();
                     httpURLConnection.getOutputStream().write(Marble.getConfig().getGson().toJson(request.getForm()).getBytes());
                     httpURLConnection.getOutputStream().flush();
                     httpURLConnection.getOutputStream().close();
                 } else if (Compressor.FORM.equals(request.getContentType())) {
+                    // 设置是否输出
+                    httpURLConnection.setDoOutput(true);
+                    //连接
+                    openConnection.connect();
                     stringBuffer.setLength(0);
                     for (Map.Entry<String, Object> entry :
                             request.getForm().entrySet()) {
@@ -94,6 +98,9 @@ public class JavaNWImpl implements INetWork {
                     httpURLConnection.getOutputStream().write(stringBuffer.toString().getBytes());
                     httpURLConnection.getOutputStream().flush();
                     httpURLConnection.getOutputStream().close();
+                }else {
+                    //连接
+                    openConnection.connect();
                 }
                 int responseCode = httpURLConnection.getResponseCode();
                 stoneCore.code = responseCode;

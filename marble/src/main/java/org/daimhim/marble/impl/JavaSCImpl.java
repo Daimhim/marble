@@ -82,6 +82,9 @@ public class JavaSCImpl extends IStoneCore {
 
     @Override
     public List<String> headers(String name) {
+        if (httpURLConnection == null){
+            return null;
+        }
         return httpURLConnection.getHeaderFields().get(name);
     }
 
@@ -92,12 +95,18 @@ public class JavaSCImpl extends IStoneCore {
 
     @Override
     public String header(String name, String defaultValue) {
+        if (httpURLConnection == null){
+            return null;
+        }
         String result = httpURLConnection.getHeaderField(name);
         return result != null ? result : defaultValue;
     }
 
     @Override
     public Map<String, List<String>> headers() {
+        if (httpURLConnection == null){
+            return null;
+        }
         return httpURLConnection.getHeaderFields();
     }
 }

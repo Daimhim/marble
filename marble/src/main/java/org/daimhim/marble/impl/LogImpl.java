@@ -74,13 +74,13 @@ public class LogImpl implements INetWork {
         log(String.format("--> ContentType: %s", sandySoil.getContentType()));
         log(String.format("--> UrlParameter: %s", sandySoil.getUrlParameter()));
         log(String.format("--> Form: %s", sandySoil.getForm()));
-
-        log(String.format("<-- Headers: %s",JSONUtil.toJson(pebbles.headers())));
         if (pebbles.isSuccessful()) {
+            log(String.format("<-- Headers: %s",JSONUtil.toJson(pebbles.headers())));
             if (bodyHasEncoding(pebbles)){
                 BufferedReader reader = null;
                 try {
-                    reader = new BufferedReader(new InputStreamReader(pebbles.byteStream()));
+                    InputStream in = pebbles.byteStream();
+                    reader = new BufferedReader(new InputStreamReader(in));
                     StringWriter out = new StringWriter();
                     int DEFAULT_BUFFER_SIZE = 4 * 1024;
                     char[] buffer = new char[DEFAULT_BUFFER_SIZE];
@@ -90,6 +90,7 @@ public class LogImpl implements INetWork {
                         chars = reader.read(buffer);
                     }
                     log(String.format("<-- Body: %s", out.toString()));
+                    in.skip(0);
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
