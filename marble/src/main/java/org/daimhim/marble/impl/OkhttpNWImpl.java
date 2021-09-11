@@ -40,7 +40,9 @@ public class OkhttpNWImpl implements INetWork {
             Response execute = okHttpClient
                     .newCall(request)
                     .execute();
-            pebbles = new Pebbles(new OkhttpSCImpl(execute));
+            OkhttpSCImpl stoneCore = new OkhttpSCImpl(execute);
+            stoneCore.sandySoil = rb;
+            pebbles = new Pebbles(stoneCore);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,6 +57,7 @@ public class OkhttpNWImpl implements INetWork {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         OkhttpSCImpl okhttpSC = new OkhttpSCImpl(null);
+                        okhttpSC.sandySoil = rb;
                         okhttpSC.e = e;
                         pebblesCall.call(new Pebbles(okhttpSC));
                     }
@@ -62,6 +65,7 @@ public class OkhttpNWImpl implements INetWork {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         OkhttpSCImpl stoneCore = new OkhttpSCImpl(response);
+                        stoneCore.sandySoil = rb;
                         stoneCore.code = response.code();
                         pebblesCall.call(new Pebbles(stoneCore));
                     }

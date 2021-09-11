@@ -10,6 +10,7 @@ public class Compressor {
 
     public static String JSON = "application/json;charset=utf-8";
     public static String FORM = "application/x-www-form-urlencoded";
+    public static String NONE = "";
 
     public static Build obtain(INetWork iNetWork) {
         return new Build(iNetWork);
@@ -28,7 +29,7 @@ public class Compressor {
         private final Map<String,String> headers = new HashMap<>();
         private final Map<String,String> urlParameter = new HashMap<>();
         private final Map<String,Object> form = new HashMap<>();
-        private String contentType = Compressor.FORM;
+        private String contentType = Compressor.NONE;
         private final INetWork netWork;
 
         public Build setReadTimeout(int readTimeout) {

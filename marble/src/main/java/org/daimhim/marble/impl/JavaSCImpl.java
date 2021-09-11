@@ -19,8 +19,9 @@ import okhttp3.Headers;
  * description :
  */
 public class JavaSCImpl extends IStoneCore {
-    private final HttpURLConnection httpURLConnection;
-    public JavaSCImpl(HttpURLConnection httpURLConnection) {
+    private HttpURLConnection httpURLConnection;
+
+    void setHttpURLConnection(HttpURLConnection httpURLConnection) {
         this.httpURLConnection = httpURLConnection;
     }
 

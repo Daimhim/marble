@@ -28,7 +28,8 @@ public class JavaNWImpl implements INetWork {
     @Override
     public Pebbles execute() {
         Pebbles pebbles = null;
-        JavaSCImpl stoneCore = null;
+        JavaSCImpl stoneCore = new JavaSCImpl();
+        stoneCore.sandySoil = request;
         StringBuilder stringBuffer = new StringBuilder(checkUrl(request.getUrl()));
         if (!request.getUrlParameter().isEmpty()){
             stringBuffer
@@ -49,15 +50,16 @@ public class JavaNWImpl implements INetWork {
             url = new URL(stringBuffer.toString());
             URLConnection openConnection = url.openConnection();
             openConnection.setRequestProperty("Accept-Charset", "utf-8");
-            openConnection.setRequestProperty("Content-Type", request.getContentType());
+//            openConnection.setRequestProperty("Content-Type", request.getContentType());
             if (openConnection instanceof HttpURLConnection) {
                 for (Map.Entry<String, String> entry :
                         request.getHeaders().entrySet()) {
                     openConnection.setRequestProperty(entry.getKey(), entry.getValue());
                 }
                 HttpURLConnection httpURLConnection = ((HttpURLConnection) openConnection);
+                stoneCore.setHttpURLConnection(httpURLConnection);
                 httpURLConnection.setRequestMethod(request.getMethod());
-                //
+                //设置实例跟踪重定向
                 httpURLConnection.setInstanceFollowRedirects(true);
                 // 设置超时时间
                 if (request.getConnectTimeout() != -1) {
@@ -67,9 +69,9 @@ public class JavaNWImpl implements INetWork {
                     httpURLConnection.setReadTimeout(request.getReadTimeout());
                 }
                 // 设置是否输出
-                httpURLConnection.setDoOutput(true);
+//                httpURLConnection.setDoOutput(true);
                 // 设置是否读入
-                httpURLConnection.setDoInput(true);
+//                httpURLConnection.setDoInput(true);
                 //连接
                 openConnection.connect();
                 if (Compressor.JSON.equals(request.getContentType())) {
@@ -93,8 +95,6 @@ public class JavaNWImpl implements INetWork {
                     httpURLConnection.getOutputStream().flush();
                     httpURLConnection.getOutputStream().close();
                 }
-                stoneCore = new JavaSCImpl(httpURLConnection);
-                stoneCore.sandySoil = request;
                 int responseCode = httpURLConnection.getResponseCode();
                 stoneCore.code = responseCode;
                 if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -106,7 +106,6 @@ public class JavaNWImpl implements INetWork {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            stoneCore = new JavaSCImpl(null);
             stoneCore.e = e;
             pebbles = new Pebbles(stoneCore);
         }
